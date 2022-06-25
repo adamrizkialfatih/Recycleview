@@ -1,7 +1,12 @@
 package com.adamrizkialfatih.recycleview
 
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.adamrizkialfatih.recycleview.adapter.AdapterTeamBasket
 import com.adamrizkialfatih.recycleview.databinding.ActivityMainBinding
 import com.adamrizkialfatih.recycleview.model.Pemain
@@ -22,7 +27,34 @@ private lateinit var binding:ActivityMainBinding
 
         binding.list.adapter = AdapterTeamBasket(this,listPemain,object : AdapterTeamBasket.OnClickListener {
             override fun detailData(item: Pemain?) {
-                TODO("Not yet implemented")
+                Dialog(this@MainActivity).apply {
+                    requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    setCancelable(true)
+                    setContentView(R.layout.detail_data_pemain)
+
+                    val image = this.findViewById<ImageView>(R.id.image_pemain)
+                    val nama = this.findViewById<TextView>(R.id.txtNamaPemain)
+                    val posisi = this.findViewById<TextView>(R.id.txtposisi)
+                    val tinggi = this.findViewById<TextView>(R.id.txttinggi)
+                    val tempatlahir = this.findViewById<TextView>(R.id.txttempatLahir)
+                    val tgllahir = this.findViewById<TextView>(R.id.txttanggallahir)
+
+                    val btn = this.findViewById<Button>(R.id.btnClose)
+
+                    image.setImageResource(item?.foto ?:0)
+                    nama.text = "${item?.nama}"
+                    posisi.text = "${item?.posisi}"
+                    tinggi.text = "${item?.tinggi}"
+                    tempatlahir.text = "${item?.tempatlahir}"
+                    tgllahir.text = "${item?.tgllahir}"
+
+                    btn.setOnClickListener {
+                        this.dismiss()
+                    }
+
+
+                }.show()
+
             }
 
         } )
